@@ -1,0 +1,53 @@
+
+syntax = "proto3";
+
+package order;
+
+service Orders {
+    // 查询总价
+    rpc Amount(Request) returns (Response) {}
+    // 获取订单列表
+    rpc List(Request) returns (Response) {}
+    // 获取唯一订单
+    rpc Get(Request) returns (Response) {}
+    // 创建订单
+    rpc Create(Request) returns (Response) {}
+    // 更新订单
+    rpc Update(Request) returns (Response) {}
+    // 删除订单
+    rpc Delete(Request) returns (Response) {}
+}
+
+message Order{
+    int64 order_id=1;
+    string order_no=2;
+    int64 user_id=3;
+    int32 total_price=4;
+    int32 pay_status=5;
+    int32 pay_type=6;
+    string pay_time=7;
+    int32 order_status=8;
+    string extra_info=9;
+    string user_address=10;
+    int32 is_deleted=11;
+    string created_at = 12;
+    string updated_at = 13;
+}
+
+message ListQuery {
+    int64 limit=1;          // 返回数量
+    int64 page=2;           // 页面
+    string sort=3;          // 排序
+    string where = 4;       // 查询条件
+}
+message Request {
+    ListQuery list_query = 1; // 列表分页请求
+    Order order = 2; // 用户
+}
+
+message Response {
+    bool valid = 1;
+    int64 total = 2;
+    Order order = 3;
+    repeated Order order_list = 4;
+}
